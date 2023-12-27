@@ -9,11 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
 public class StudentController {
     @Autowired
     private ClassService classService;
@@ -23,8 +21,9 @@ public class StudentController {
     @GetMapping("/student")
     public String index(Model model) {
         List<Student> studentList = studentService.findAll();
+        System.out.println("studentList" + studentList.size());
         model.addAttribute("studentList", studentList);
-        return "/student/student";
+        return "student";
     }
 
     @GetMapping("/add_student")
@@ -33,7 +32,7 @@ public class StudentController {
         Student student = new Student();
         model.addAttribute("student", student);
         model.addAttribute("classList", classList);
-        return "student/add_student";
+        return "add_student";
     }
 
     @PostMapping("/add_student")
@@ -41,7 +40,7 @@ public class StudentController {
         if (studentService.saveOrUpdate(student)) {
             return "redirect:/student";
         } else {
-            return "/student/add_student";
+            return "add_student";
         }
     }
 
@@ -51,7 +50,7 @@ public class StudentController {
         Student student = studentService.findById(id);
         model.addAttribute("student", student);
         model.addAttribute("classList", classList);
-        return "student/edit_student";
+        return "edit_student";
     }
 
     @PostMapping("/edit_student/{id}")
@@ -59,7 +58,7 @@ public class StudentController {
         if (studentService.saveOrUpdate(student)) {
             return "redirect:/student";
         }
-        return "student/edit_student";
+        return "edit_student";
     }
 
     @GetMapping("/delete_student/{id}")

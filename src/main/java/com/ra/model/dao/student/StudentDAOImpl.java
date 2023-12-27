@@ -19,7 +19,7 @@ public class StudentDAOImpl implements StudentDAO {
         List<Student> students = new ArrayList<>();
         Session session = sessionFactory.openSession();
         try {
-            students = session.createQuery("from Student , Student .class").list();
+            students = session.createQuery("from Student",Student.class).list();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

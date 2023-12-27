@@ -1,6 +1,5 @@
 package com.ra.controller;
 
-import com.ra.model.entity.Student;
 import com.ra.model.entity.Classs;
 import com.ra.model.service.classs.ClassService;
 import com.ra.model.service.student.StudentService;
@@ -16,21 +15,19 @@ import java.util.List;
 public class ClassController {
     @Autowired
     private ClassService classService;
-    @Autowired
-    private StudentService studentService;
 
     @GetMapping("/class")
     public String index(Model model) {
         List<Classs> classsList = classService.findAll();
         model.addAttribute("classsList", classsList);
-        return "/classs/class";
+        return "class";
     }
 
     @GetMapping("/add_class")
     public String addClass(Model model) {
         Classs classs = new Classs();
         model.addAttribute("classs", classs);
-        return "classs/add_class";
+        return "add_class";
     }
 
     @PostMapping("/add_class")
@@ -38,14 +35,14 @@ public class ClassController {
         if (classService.saveOrUpdate(classs)) {
             return "redirect:/class";
         }
-        return "classs/add_class";
+        return "add_class";
     }
 
     @GetMapping("/edit_class/{id}")
     public String editClass(@PathVariable("id") Integer id, Model model) {
         Classs classs = classService.findById(id);
         model.addAttribute("classs", classs);
-        return "classs/edit_class";
+        return "edit_class";
     }
 
     @PostMapping("/edit_class/{id}")
